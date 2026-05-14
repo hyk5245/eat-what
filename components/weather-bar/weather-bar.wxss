@@ -1,0 +1,39 @@
+.weather-bar {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  background: #f5f7fa;
+  border-radius: 12rpx;
+  padding: 32rpx;
+}
+
+.weather-emoji {
+  font-size: 64rpx;
+}
+
+.weather-info {
+  flex: 1;
+}
+
+.weather-city {
+  font-size: 26rpx;
+  color: #999999;
+}
+
+.weather-temp {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.weather-hint {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.weather-loading,
+.weather-error {
+  font-size: 28rpx;
+  color: #999999;
+  padding: 16rpx 0;
+}

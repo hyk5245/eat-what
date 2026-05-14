@@ -1,0 +1,79 @@
+.user-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48rpx 0 32rpx;
+}
+
+.avatar-btn {
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 50%;
+  padding: 0;
+  margin-bottom: 24rpx;
+  background: transparent;
+  border: none;
+  line-height: 1;
+}
+
+.avatar-btn::after {
+  border: none;
+}
+
+.avatar {
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 50%;
+  background: #e8e8e8;
+}
+
+.user-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 8rpx;
+}
+
+.user-desc {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.menu-group {
+  border: 2rpx solid #e8e8e8;
+  border-radius: 24rpx;
+  overflow: hidden;
+  margin-bottom: 32rpx;
+}
+
+.menu-group-title {
+  padding: 28rpx 32rpx;
+  font-size: 26rpx;
+  color: #999999;
+  background: #fafafa;
+  border-bottom: 2rpx solid #e8e8e8;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28rpx 32rpx;
+  font-size: 30rpx;
+  color: #333333;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-value {
+  font-size: 26rpx;
+  color: #999999;
+}
+
+.menu-arrow {
+  font-size: 26rpx;
+  color: #cccccc;
+}

@@ -1,0 +1,39 @@
+<view class="container">
+  <weather-bar
+    weather="{{weather}}"
+    loading="{{weatherLoading}}"
+    error="{{weatherError}}"
+    bindtap="onRefresh"
+  >{{weatherType === 'rainy' ? '暖身热食' : weatherType === 'hot' ? '清爽凉菜' : weatherType === 'cold' ? '暖身炖菜' : '随便吃'}}</weather-bar>
+
+  <view class="recommend-card" wx:if="{{recommendDish}}">
+    <view class="recommend-label">今日适合吃</view>
+    <view class="recommend-name">{{recommendDish.emoji}} {{recommendDish.name}}</view>
+    <view class="recommend-meta">{{recommendDish.tags[0]}} · {{recommendDish.cookingTime}}分钟 · {{recommendDish.difficulty === 'easy' ? '简单' : recommendDish.difficulty === 'medium' ? '中等' : '复杂'}}</view>
+  </view>
+
+  <view class="random-section">
+    <view class="random-btn" bindtap="onRandomTap">
+      <text>随机\n吃什么</text>
+    </view>
+    <view class="random-hint">点我试试</view>
+  </view>
+
+  <view class="category-tags">
+    <view
+      wx:for="{{['noodle', 'rice', 'stew', 'cold']}}"
+      wx:key="*this"
+      class="category-tag {{activeCategory === item ? 'active' : ''}}"
+      data-category="{{item}}"
+      bindtap="onCategoryTap"
+    >{{item === 'noodle' ? '🍜 面食' : item === 'rice' ? '🍚 米饭' : item === 'stew' ? '🥘 炖菜' : '🥗 凉拌'}}</view>
+  </view>
+
+  <dish-modal
+    dish="{{currentDish}}"
+    visible="{{modalVisible}}"
+    bindchange="onChangeDish"
+    bindconfirm="onConfirmDish"
+    bindclose="onCloseModal"
+  />
+</view>

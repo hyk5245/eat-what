@@ -1,0 +1,54 @@
+<view class="container">
+  <block wx:if="{{!imagePath && !recognizing}}">
+    <view class="upload-area">
+      <view class="upload-icon">📷</view>
+      <view class="upload-title">拍菜单，帮我选</view>
+      <view class="upload-desc">拍照或从相册选择菜单照片</view>
+      <view class="upload-actions">
+        <view class="upload-btn primary" bindtap="onTakePhoto">📷 拍照</view>
+        <view class="upload-btn secondary" bindtap="onChooseAlbum">🖼️ 相册</view>
+      </view>
+    </view>
+  </block>
+
+  <block wx:if="{{recognizing}}">
+    <view class="recognizing-area">
+      <image class="preview-img" src="{{imagePath}}" mode="aspectFit" />
+      <view class="recognizing-mask">
+        <view class="loading-spinner"></view>
+        <view class="recognizing-text">正在识别菜单中的菜品…</view>
+      </view>
+    </view>
+  </block>
+
+  <block wx:if="{{dishes.length > 0 && !recognizing}}">
+    <view class="result-header">
+      <text>已识别出 <strong>{{dishes.length}}</strong> 个菜品</text>
+      <text class="edit-link" bindtap="onReset">重新拍照</text>
+    </view>
+    <view class="dish-tags">
+      <view
+        wx:for="{{dishes}}"
+        wx:key="index"
+        class="dish-tag"
+        data-index="{{index}}"
+        bindlongpress="onDeleteDish"
+      >{{item}} <text class="tag-close" data-index="{{index}}" bindtap="onDeleteDish">✕</text></view>
+      <view class="dish-tag add-tag" bindtap="onAddDish">+ 添加</view>
+    </view>
+    <view class="pick-btn" bindtap="onPickOne">🎲 帮我选一个</view>
+  </block>
+
+  <block wx:if="{{selectedDish && modalVisible}}">
+    <view class="modal-overlay" bindtap="onCloseModal">
+      <view class="modal-content" catchtap="noop">
+        <view class="modal-emoji">🎉</view>
+        <view class="modal-name">{{selectedDish}}</view>
+        <view class="modal-actions">
+          <view class="action-btn secondary" bindtap="onChangeDish">🔄 换一个</view>
+          <view class="action-btn primary" bindtap="onConfirmDish">👍 就这个</view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

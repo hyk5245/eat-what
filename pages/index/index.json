@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "weather-bar": "/components/weather-bar/weather-bar",
+    "dish-modal": "/components/dish-modal/dish-modal"
+  },
+  "navigationBarTitleText": "吃什么"
+}

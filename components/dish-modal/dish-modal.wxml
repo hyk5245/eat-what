@@ -1,0 +1,11 @@
+<view class="modal-overlay" wx:if="{{visible}}" bindtap="onClose">
+  <view class="modal-content" catchtap="noop">
+    <view class="modal-emoji">{{dish.emoji}}</view>
+    <view class="modal-name">{{dish.name}}</view>
+    <view class="modal-meta">{{dish.tags.join(' · ')}} · {{dish.cookingTime}}分钟 · {{dish.difficulty === 'easy' ? '简单' : dish.difficulty === 'medium' ? '中等' : '复杂'}}</view>
+    <view class="modal-actions">
+      <view class="action-btn secondary" bindtap="onChange">🔄 换一个</view>
+      <view class="action-btn primary" bindtap="onConfirm">👍 就这个</view>
+    </view>
+  </view>
+</view>
