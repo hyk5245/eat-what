@@ -23,7 +23,11 @@
 
   <block wx:if="{{dishes.length > 0 && !recognizing}}">
     <view class="result-header">
-      <text>已识别出 <strong>{{dishes.length}}</strong> 个菜品</text>
+      <view class="result-title">
+        <text>已识别出 </text>
+        <text class="result-count">{{dishes.length}}</text>
+        <text> 个菜品</text>
+      </view>
       <text class="edit-link" bindtap="onReset">重新拍照</text>
     </view>
     <view class="dish-tags">
@@ -37,6 +41,18 @@
       <view class="dish-tag add-tag" bindtap="onAddDish">+ 添加</view>
     </view>
     <view class="pick-btn" bindtap="onPickOne">🎲 帮我选一个</view>
+  </block>
+
+  <block wx:if="{{imagePath && !recognizing && dishes.length === 0}}">
+    <view class="fallback-card">
+      <image class="preview-img fallback-preview" src="{{imagePath}}" mode="aspectFit" />
+      <view class="fallback-title">{{quotaExceeded ? '微信 OCR 配额已用尽' : '这张菜单没识别出可用菜名'}}</view>
+      <view class="fallback-desc">{{ocrError || '你可以手动补充菜品，再继续随机选择。'}}</view>
+      <view class="fallback-actions">
+        <view class="upload-btn secondary" bindtap="onReset">重新拍照</view>
+        <view class="upload-btn primary" bindtap="onAddDish">手动添加</view>
+      </view>
+    </view>
   </block>
 
   <block wx:if="{{selectedDish && modalVisible}}">

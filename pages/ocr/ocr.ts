@@ -1,4 +1,5 @@
 import { addHistory } from '../../utils/storage'
+import { recognizeMenuFromImage } from '../../utils/ocr'
 import { uniformRandom } from '../../utils/random'
 
 Page({
@@ -6,6 +7,8 @@ Page({
     imagePath: '',
     dishes: [] as string[],
     recognizing: false,
+    ocrError: '',
+    quotaExceeded: false,
     selectedDish: '',
     modalVisible: false,
   },
@@ -37,39 +40,26 @@ Page({
   },
 
   async recognizeMenu(imagePath: string) {
-    this.setData({ recognizing: true, dishes: [] })
+    this.setData({ recognizing: true, dishes: [], ocrError: '', quotaExceeded: false })
     try {
-      const cloudPath = `ocr-images/${Date.now()}.jpg`
-      const uploadRes = await wx.cloud.uploadFile({
-        cloudPath,
-        filePath: imagePath,
-      })
-
-      const ocrRes = await wx.cloud.callFunction({
-        name: 'ocrDetail',
-        data: {
-          imgUrl: uploadRes.fileID,
-          dataType: 3,
-        },
-      })
-
-      const result = ocrRes.result as any
-      const items = result?.items || []
-      const dishes = items
-        .map((item: any) => item.text.trim())
-        .filter((t: string) => t.length > 0)
+      const result = await recognizeMenuFromImage(imagePath)
+      const dishes = result.dishes || []
+      const ocrError = result.error || ''
+      const quotaExceeded = result.errorCode === 'QUOTA_EXCEEDED'
 
       if (dishes.length === 0) {
-        wx.showToast({ title: '未识别到菜品', icon: 'none' })
+        const errMsg = ocrError || '未识别到菜品'
+        wx.showToast({ title: errMsg, icon: 'none', duration: 3000 })
+      } else if (ocrError) {
+        wx.showToast({ title: ocrError, icon: 'none', duration: 3000 })
       }
 
-      this.setData({ dishes, recognizing: false })
-
-      wx.cloud.deleteFile({ fileList: [uploadRes.fileID] })
+      this.setData({ dishes, recognizing: false, ocrError, quotaExceeded })
     } catch (err) {
       console.error('OCR 失败:', err)
-      this.setData({ recognizing: false })
-      wx.showToast({ title: '识别失败，请重试', icon: 'none' })
+      const ocrError = '识别失败，请重试'
+      this.setData({ recognizing: false, ocrError, quotaExceeded: false })
+      wx.showToast({ title: ocrError, icon: 'none' })
     }
   },
 
@@ -126,10 +116,14 @@ Page({
     this.setData({ modalVisible: false })
   },
 
+  noop() {},
+
   onReset() {
     this.setData({
       imagePath: '',
       dishes: [],
+      ocrError: '',
+      quotaExceeded: false,
       selectedDish: '',
     })
   },

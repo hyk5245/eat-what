@@ -60,7 +60,7 @@ Page({
   },
 
   onGoHistory() {
-    wx.switchTab({ url: '/pages/history/history' })
+    wx.navigateTo({ url: '/pages/history/history' })
   },
 
   onAbout() {

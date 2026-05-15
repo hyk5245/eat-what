@@ -7,7 +7,13 @@
       "Bash(node *)",
       "Bash(xxd)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "WebFetch(domain:developers.weixin.qq.com)",
+      "WebFetch(domain:fuwu.weixin.qq.com)",
+      "Bash(curl -s -L -H \"User-Agent: Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0.0.0 Safari/537.36\" \"https://fuwu.weixin.qq.com/service/detail/000ce4cec24ca026d37900ed551415\")",
+      "Bash(python3 -c \"import sys,json; data=json.loads\\(sys.stdin.read\\(\\)\\); print\\(json.dumps\\(data, ensure_ascii=False, indent=2\\)\\)\")",
+      "Bash(python3 -c ' *)",
+      "WebSearch"
     ]
   }
 }

@@ -1,4 +1,5 @@
 import { WeatherInfo } from '../../utils/types'
+import {getWeatherType} from "../../utils/random";
 
 Component({
   properties: {
@@ -17,6 +18,7 @@ Component({
   },
   data: {
     weatherEmoji: '',
+    weatherType: 'mild'
   },
   observers: {
     weather(weather: WeatherInfo | null) {
@@ -27,7 +29,8 @@ Component({
       else if (code.includes('snow')) emoji = '❄️'
       else if (code.includes('100') || code.includes('sunny')) emoji = '☀️'
       else if (code.includes('cloud')) emoji = '☁️'
-      this.setData({ weatherEmoji: emoji })
+      const weatherType = getWeatherType(weather)
+      this.setData({ weatherEmoji: emoji, weatherType })
     },
   },
 })

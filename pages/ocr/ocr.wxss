@@ -97,6 +97,16 @@
   color: #333333;
 }
 
+.result-title {
+  display: flex;
+  align-items: baseline;
+}
+
+.result-count {
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
 .edit-link {
   font-size: 26rpx;
   color: #999999;
@@ -137,6 +147,39 @@
   text-align: center;
   font-size: 32rpx;
   font-weight: 600;
+}
+
+.fallback-card {
+  margin-top: 32rpx;
+  padding: 28rpx;
+  border-radius: 24rpx;
+  background: #fafafa;
+  border: 2rpx solid #ececec;
+}
+
+.fallback-preview {
+  height: 360rpx;
+  margin-bottom: 24rpx;
+  border-radius: 20rpx;
+}
+
+.fallback-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 12rpx;
+}
+
+.fallback-desc {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.6;
+  margin-bottom: 24rpx;
+}
+
+.fallback-actions {
+  display: flex;
+  gap: 20rpx;
 }
 
 .modal-overlay {
