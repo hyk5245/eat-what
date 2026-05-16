@@ -5,6 +5,7 @@ import {
   updateCustomDish,
   deleteCustomDish,
   mapCustomDishToDish,
+  addHistory,
 } from '../../utils/storage'
 import { uniformRandom } from '../../utils/random'
 
@@ -73,6 +74,15 @@ Page({
   },
 
   onConfirmDish(e: WechatMiniprogram.CustomEvent) {
+    const dish: Dish = e.detail.dish
+    addHistory({
+      id: Date.now().toString(),
+      dishId: dish.id,
+      dishName: dish.name,
+      emoji: dish.emoji,
+      source: 'random',
+      createdAt: Date.now(),
+    })
     this.setData({ modalVisible: false })
     wx.showToast({ title: '就它了！', icon: 'success' })
   },
