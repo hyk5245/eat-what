@@ -1,5 +1,4 @@
-import { HistoryRecord, UserPreference } from './types'
-import { CustomMenu, CustomDish, Dish } from './types'
+import { HistoryRecord, UserPreference, CustomMenu, CustomDish, Dish } from './types'
 
 const MENUS_KEY = 'eat_what_menus'
 const DISHES_KEY = 'eat_what_custom_dishes'
