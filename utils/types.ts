@@ -32,3 +32,19 @@ export interface UserPreference {
   taste: string
   avoid: string[]
 }
+
+export interface CustomMenu {
+  id: string
+  name: string
+  createdAt: number
+}
+
+export interface CustomDish {
+  id: string
+  menuId: string
+  name: string
+  note?: string
+  category?: string
+  emoji?: string
+  createdAt: number
+}
