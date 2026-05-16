@@ -1,0 +1,75 @@
+<view class="container">
+  <view class="header">
+    <view class="header-title">{{menuName}}</view>
+    <view class="header-count">{{dishes.length}}道菜</view>
+  </view>
+
+  <!-- dish list -->
+  <view class="dish-list" wx:if="{{dishes.length > 0}}">
+    <view
+      class="dish-item"
+      wx:for="{{dishes}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onTapDish"
+    >
+      <view class="dish-emoji">{{item.emoji || '🍽️'}}</view>
+      <view class="dish-name">{{item.name}}</view>
+      <view class="dish-delete" data-id="{{item.id}}" data-name="{{item.name}}" catchtap="onDeleteDish">×</view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-icon">🥢</view>
+    <view class="empty-text">还没有菜品</view>
+    <view class="empty-hint">点击下方按钮添加</view>
+  </view>
+
+  <!-- bottom bar -->
+  <view class="bottom-bar">
+    <button class="add-btn" bindtap="onAddDish">+ 添加菜品</button>
+    <button class="random-btn" bindtap="onRandomPick" disabled="{{dishes.length === 0}}">🎲 随机选一个</button>
+  </view>
+
+  <!-- editor bottom sheet -->
+  <view class="editor-overlay" wx:if="{{showEditor}}" bindtap="onCloseEditor">
+    <view class="editor-panel" catchtap="noop">
+      <view class="editor-header">
+        <text>{{editingDishId ? '编辑菜品' : '添加菜品'}}</text>
+        <text class="editor-close" bindtap="onCloseEditor">×</text>
+      </view>
+      <view class="editor-body">
+        <view class="form-item">
+          <text class="form-label">菜名 *</text>
+          <input class="form-input" placeholder="输入菜名" value="{{formName}}" bindinput="onFormName" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">备注</text>
+          <input class="form-input" placeholder="如：少辣、多放醋" value="{{formNote}}" bindinput="onFormNote" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">分类</text>
+          <picker mode="selector" range="{{['不限','面食','米饭','炖菜','凉拌','汤','炒菜','小吃']}}" value="{{formCategoryIndex}}" bindchange="onCategoryChange">
+            <view class="form-picker">{{formCategoryLabel}}</view>
+          </picker>
+        </view>
+        <view class="form-item">
+          <text class="form-label">Emoji</text>
+          <input class="form-input" placeholder="如：🍜" value="{{formEmoji}}" bindinput="onFormEmoji" />
+        </view>
+      </view>
+      <view class="editor-footer">
+        <button class="save-btn" bindtap="onSaveDish">保存</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- random result modal -->
+  <dish-modal
+    dish="{{modalDish}}"
+    visible="{{modalVisible}}"
+    bind:change="onChangeDish"
+    bind:confirm="onConfirmDish"
+    bind:close="onCloseModal"
+  />
+</view>

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "dish-modal": "/components/dish-modal/dish-modal"
+  },
+  "navigationBarTitleText": "菜单详情"
+}
