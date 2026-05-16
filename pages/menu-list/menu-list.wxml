@@ -1,0 +1,28 @@
+<view class="container">
+  <view class="menu-list" wx:if="{{menus.length > 0}}">
+    <view
+      class="menu-card"
+      wx:for="{{menus}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      data-name="{{item.name}}"
+      bindtap="onTapMenu"
+    >
+      <view class="menu-card-body">
+        <view class="menu-card-name">{{item.name}}</view>
+        <view class="menu-card-count">{{item.dishCount}}道菜</view>
+      </view>
+      <view class="menu-card-delete" data-id="{{item.id}}" data-name="{{item.name}}" catchtap="onDeleteMenu">×</view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-icon">📋</view>
+    <view class="empty-text">还没有菜单</view>
+    <view class="empty-hint">点击下方按钮创建第一个菜单</view>
+  </view>
+
+  <view class="create-btn-wrapper">
+    <button class="create-btn" bindtap="onCreateMenu">+ 新建菜单</button>
+  </view>
+</view>
