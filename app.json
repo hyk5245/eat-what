@@ -2,7 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/ocr/ocr",
+    "pages/menu-list/menu-list",
     "pages/history/history",
+    "pages/menu-detail/menu-detail",
     "pages/profile/profile"
   ],
   "window": {
@@ -28,6 +30,12 @@
         "text": "扫菜单",
         "iconPath": "assets/icons/scan.png",
         "selectedIconPath": "assets/icons/scan-active.png"
+      },
+      {
+        "pagePath": "pages/menu-list/menu-list",
+        "text": "菜单",
+        "iconPath": "assets/icons/menu.png",
+        "selectedIconPath": "assets/icons/menu-active.png"
       },
       {
         "pagePath": "pages/profile/profile",
