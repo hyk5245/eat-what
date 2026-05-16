@@ -49,7 +49,7 @@
         </view>
         <view class="form-item">
           <text class="form-label">分类</text>
-          <picker mode="selector" range="{{['不限','面食','米饭','炖菜','凉拌','汤','炒菜','小吃']}}" value="{{formCategoryIndex}}" bindchange="onCategoryChange">
+          <picker mode="selector" range="{{categoryLabels}}" value="{{formCategoryIndex}}" bindchange="onCategoryChange">
             <view class="form-picker">{{formCategoryLabel}}</view>
           </picker>
         </view>

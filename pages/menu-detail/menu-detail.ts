@@ -32,10 +32,13 @@ Page({
     formEmoji: '',
     formCategoryIndex: 0,
     formCategoryLabel: '不限',
+    categoryLabels: ['不限', '面食', '米饭', '炖菜', '凉拌', '汤', '炒菜', '小吃'] as string[],
   },
 
   categories: ['', 'noodle', 'rice', 'stew', 'cold', 'soup', 'stirfry', 'snack'] as const,
   categoryLabels: ['不限', '面食', '米饭', '炖菜', '凉拌', '汤', '炒菜', '小吃'] as const,
+
+  noop() {},
 
   onLoad(options: Record<string, string>) {
     this.setData({
