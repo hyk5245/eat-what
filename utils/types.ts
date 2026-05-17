@@ -3,10 +3,12 @@ export interface Dish {
   name: string
   category: 'noodle' | 'rice' | 'stew' | 'cold' | 'soup' | 'stirfry' | 'snack'
   suitableWeather: WeatherType[]
-  cookingTime: number
   difficulty: 'easy' | 'medium' | 'hard'
   tags: string[]
   emoji: string
+  mealTime?: ('breakfast' | 'lunch' | 'dinner' | 'snack')[]
+  priceLevel?: 1 | 2 | 3
+  calories?: number
 }
 
 export interface HistoryRecord {
@@ -29,8 +31,9 @@ export interface WeatherInfo {
 export type WeatherType = 'rainy' | 'hot' | 'cold' | 'mild'
 
 export interface UserPreference {
-  taste: string
+  taste: string[]
   avoid: string[]
+  dedupDays: number
 }
 
 export interface CustomMenu {
@@ -47,4 +50,15 @@ export interface CustomDish {
   category?: string
   emoji?: string
   createdAt: number
+}
+
+export interface UserAction {
+  dishId: string
+  action: 'confirm' | 'skip'
+  timestamp: number
+}
+
+export interface MemberStatus {
+  isMember: boolean
+  expireAt?: number
 }
