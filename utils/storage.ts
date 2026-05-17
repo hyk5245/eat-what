@@ -1,7 +1,12 @@
-import { HistoryRecord, UserPreference, CustomMenu, CustomDish, Dish } from './types'
+import { HistoryRecord, UserPreference, CustomMenu, CustomDish, Dish, UserAction } from './types'
 
 const MENUS_KEY = 'eat_what_menus'
 const DISHES_KEY = 'eat_what_custom_dishes'
+const HISTORY_KEY = 'eat_what_history'
+const PREFERENCE_KEY = 'eat_what_preference'
+const ACTIONS_KEY = 'eat_what_actions'
+const MAX_HISTORY = 100
+const MAX_ACTIONS = 500
 
 /** 将 CustomDish 映射为 Dish 兼容对象，供 dish-modal 展示 */
 export function mapCustomDishToDish(dish: CustomDish): Dish {
@@ -11,7 +16,6 @@ export function mapCustomDishToDish(dish: CustomDish): Dish {
     emoji: dish.emoji || '🍽️',
     category: (dish.category as Dish['category']) || 'stirfry',
     suitableWeather: [],
-    cookingTime: 0,
     difficulty: 'easy',
     tags: dish.note ? [dish.note] : [],
   }
@@ -71,10 +75,6 @@ export function deleteCustomDish(id: string): void {
   saveAllDishes(all)
 }
 
-const HISTORY_KEY = 'eat_what_history'
-const PREFERENCE_KEY = 'eat_what_preference'
-const MAX_HISTORY = 100
-
 export function getHistory(): HistoryRecord[] {
   try {
     return wx.getStorageSync(HISTORY_KEY) || []
@@ -94,12 +94,36 @@ export function addHistory(record: HistoryRecord): void {
 
 export function getPreference(): UserPreference {
   try {
-    return wx.getStorageSync(PREFERENCE_KEY) || { taste: '不限', avoid: [] }
+    const stored = wx.getStorageSync(PREFERENCE_KEY)
+    return stored
+      ? { taste: stored.taste || [], avoid: stored.avoid || [], dedupDays: stored.dedupDays ?? 3 }
+      : { taste: [], avoid: [], dedupDays: 3 }
   } catch {
-    return { taste: '不限', avoid: [] }
+    return { taste: [], avoid: [], dedupDays: 3 }
   }
 }
 
 export function setPreference(pref: UserPreference): void {
   wx.setStorageSync(PREFERENCE_KEY, pref)
+}
+
+export function getUserActions(): UserAction[] {
+  try {
+    return wx.getStorageSync(ACTIONS_KEY) || []
+  } catch {
+    return []
+  }
+}
+
+export function addUserAction(action: UserAction): void {
+  const actions = getUserActions()
+  actions.push(action)
+  if (actions.length > MAX_ACTIONS) {
+    actions.splice(0, actions.length - MAX_ACTIONS)
+  }
+  wx.setStorageSync(ACTIONS_KEY, actions)
+}
+
+export function clearUserActions(): void {
+  wx.setStorageSync(ACTIONS_KEY, [])
 }
