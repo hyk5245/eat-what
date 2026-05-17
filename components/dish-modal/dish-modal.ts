@@ -17,10 +17,10 @@ Component({
   },
   methods: {
     onChange() {
-      this.triggerEvent('change')
+      this.triggerEvent('change', { dishId: this.properties.dish?.id })
     },
     onConfirm() {
-      this.triggerEvent('confirm', { dish: this.properties.dish })
+      this.triggerEvent('confirm', { dish: this.properties.dish, dishId: this.properties.dish?.id })
     },
     onClose() {
       this.triggerEvent('close')
