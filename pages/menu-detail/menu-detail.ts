@@ -6,6 +6,7 @@ import {
   deleteCustomDish,
   mapCustomDishToDish,
   addHistory,
+  addUserAction,
 } from '../../utils/storage'
 import { uniformRandom } from '../../utils/random'
 
@@ -69,12 +70,17 @@ Page({
 
   onChangeDish() {
     if (this.data.dishes.length === 0) return
+    // Record skip on current dish
+    if (this.data.modalDish) {
+      addUserAction({ dishId: this.data.modalDish.id, action: 'skip', timestamp: Date.now() })
+    }
     const dish = uniformRandom(this.data.dishes)
     this.setData({ modalDish: mapCustomDishToDish(dish) })
   },
 
   onConfirmDish(e: WechatMiniprogram.CustomEvent) {
     const dish: Dish = e.detail.dish
+    addUserAction({ dishId: dish.id, action: 'confirm', timestamp: Date.now() })
     addHistory({
       id: Date.now().toString(),
       dishId: dish.id,

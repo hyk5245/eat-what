@@ -1,4 +1,4 @@
-import { addHistory } from '../../utils/storage'
+import { addHistory, addUserAction } from '../../utils/storage'
 import { recognizeMenuFromImage } from '../../utils/ocr'
 import { uniformRandom } from '../../utils/random'
 
@@ -94,12 +94,17 @@ Page({
   },
 
   onChangeDish() {
+    // Record skip
+    if (this.data.selectedDish) {
+      addUserAction({ dishId: `ocr:${this.data.selectedDish}`, action: 'skip', timestamp: Date.now() })
+    }
     const dish = uniformRandom(this.data.dishes)
     this.setData({ selectedDish: dish as string })
   },
 
   onConfirmDish(e: any) {
     const dishName: string = e.detail.dish || this.data.selectedDish
+    addUserAction({ dishId: `ocr:${dishName}`, action: 'confirm', timestamp: Date.now() })
     addHistory({
       id: Date.now().toString(),
       dishId: '',
