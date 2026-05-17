@@ -72,3 +72,30 @@
   background: #333333;
   color: #ffffff;
 }
+
+.seasonal-bar {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 20rpx 32rpx;
+  margin: 0 32rpx 20rpx;
+  background: rgba(255,255,255,0.7);
+  border-radius: 16rpx;
+  font-size: 24rpx;
+}
+
+.seasonal-label {
+  color: #666666;
+  flex-shrink: 0;
+}
+
+.seasonal-tags {
+  color: #333333;
+  font-weight: 500;
+}
+
+.dedup-notice {
+  font-size: 22rpx;
+  color: #f0a060;
+  margin-top: 8rpx;
+}

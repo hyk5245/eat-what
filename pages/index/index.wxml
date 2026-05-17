@@ -4,12 +4,22 @@
     loading="{{weatherLoading}}"
     error="{{weatherError}}"
     bindtap="onRefresh"
-  >{{weatherType === 'rainy' ? '暖身热食' : weatherType === 'hot' ? '清爽凉菜' : weatherType === 'cold' ? '暖身炖菜' : '随便吃'}}</weather-bar>
+  >{{weatherType === 'rainy' ? '暖身热食' : weatherType === 'hot' ? '清爽凉菜' : weatherType === 'cold' ? '暖身炖菜' : '任意菜'}} · {{mealTimeLabel}}</weather-bar>
 
   <view class="recommend-card" wx:if="{{recommendDish}}">
     <view class="recommend-label">今日适合吃</view>
     <view class="recommend-name">{{recommendDish.emoji}} {{recommendDish.name}}</view>
-    <view class="recommend-meta">{{recommendDish.tags[0]}} · {{recommendDish.cookingTime}}分钟 · {{recommendDish.difficulty === 'easy' ? '简单' : recommendDish.difficulty === 'medium' ? '中等' : '复杂'}}</view>
+    <view class="recommend-meta">
+      {{recommendDish.tags[0]}} · {{recommendDish.difficulty === 'easy' ? '简单' : recommendDish.difficulty === 'medium' ? '中等' : '复杂'}}
+      <text wx:if="{{recommendDish.priceLevel}}"> · {{recommendDish.priceLevel === 1 ? '实惠' : recommendDish.priceLevel === 2 ? '适中' : '小贵'}}</text>
+      <text wx:if="{{recommendDish.calories}}"> · 约{{recommendDish.calories}}千卡</text>
+    </view>
+    <view wx:if="{{dedupRelaxed}}" class="dedup-notice">最近吃过的已过滤，范围已放宽</view>
+  </view>
+
+  <view class="seasonal-bar" wx:if="{{seasonalTags.length > 0}}">
+    <text class="seasonal-label">⏳ 时令食材：</text>
+    <text class="seasonal-tags">{{seasonalTags.join(' · ')}}</text>
   </view>
 
   <view class="random-section">
