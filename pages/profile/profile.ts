@@ -7,7 +7,8 @@ Page({
       avatarUrl: '',
       nickName: '微信用户',
     },
-    preference: {} as UserPreference,
+    preference: { taste: [], avoid: [], dedupDays: 3 } as UserPreference,
+    dedupDaysLabel: '3天',
   },
 
   onShow() {
@@ -19,29 +20,42 @@ Page({
   },
 
   loadPreference() {
-    this.setData({ preference: getPreference() })
+    const pref = getPreference()
+    this.setData({
+      preference: pref,
+      dedupDaysLabel: pref.dedupDays === 0 ? '不限制' : `${pref.dedupDays}天`,
+    })
   },
 
   onTasteSetting() {
-    const tastes = ['不辣', '微辣', '中辣', '重辣']
-    const current = tastes.indexOf(this.data.preference.taste)
+    const tastes = ['不辣', '微辣', '中辣', '重辣', '清淡', '重口', '酸辣', '麻辣', '清甜']
+    const current = this.data.preference.taste
 
     wx.showActionSheet({
-      itemList: tastes,
+      itemList: tastes.map(t => current.includes(t) ? `${t} ✓` : t),
       success: (res) => {
-        const pref = { ...this.data.preference, taste: tastes[res.tapIndex] }
+        const selected = tastes[res.tapIndex]
+        let newTastes = [...current]
+        const idx = newTastes.indexOf(selected)
+        if (idx > -1) {
+          newTastes.splice(idx, 1)
+        } else {
+          newTastes.push(selected)
+        }
+        const pref = { ...this.data.preference, taste: newTastes }
         setPreference(pref)
         this.setData({ preference: pref })
+        wx.showToast({ title: idx > -1 ? `已移除 ${selected}` : `已添加 ${selected}`, icon: 'success' })
       },
     })
   },
 
   onAvoidSetting() {
+    const avoidOptions = ['海鲜', '内脏', '香菜', '香菇', '羊肉', '鸭肉', '猪肉', '牛肉', '鸡蛋', '花生']
     const currentAvoid = this.data.preference.avoid || []
-    const avoidOptions = ['海鲜', '内脏', '香菜', '香菇', '羊肉', '鸭肉']
 
     wx.showActionSheet({
-      itemList: avoidOptions,
+      itemList: avoidOptions.map(a => currentAvoid.includes(a) ? `${a} ✓` : a),
       success: (res) => {
         const selected = avoidOptions[res.tapIndex]
         let avoid = [...currentAvoid]
@@ -55,6 +69,25 @@ Page({
         setPreference(pref)
         this.setData({ preference: pref })
         wx.showToast({ title: idx > -1 ? `已移除 ${selected}` : `已添加 ${selected}`, icon: 'success' })
+      },
+    })
+  },
+
+  onDedupSetting() {
+    const options = ['不限制', '1天', '3天', '7天']
+    const values = [0, 1, 3, 7]
+    const current = this.data.preference.dedupDays
+
+    wx.showActionSheet({
+      itemList: options.map((o, i) => values[i] === current ? `${o} ✓` : o),
+      success: (res) => {
+        const newVal = values[res.tapIndex]
+        const pref = { ...this.data.preference, dedupDays: newVal }
+        setPreference(pref)
+        this.setData({
+          preference: pref,
+          dedupDaysLabel: newVal === 0 ? '不限制' : `${newVal}天`,
+        })
       },
     })
   },
