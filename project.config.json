@@ -47,7 +47,7 @@
     }
   },
   "compileType": "miniprogram",
-  "libVersion": "3.6.0",
+  "libVersion": "3.16.0",
   "appid": "wx133de5a3aa6eb230",
   "projectname": "eat-what",
   "condition": {},

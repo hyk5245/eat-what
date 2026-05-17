@@ -11,6 +11,6 @@
       <view class="weather-city">{{weather.city}} · 今天</view>
       <view class="weather-temp">{{weather.temp}}°C {{weather.text}}</view>
     </view>
-    <view class="weather-hint">{{ weatherType !== 'mild' ? '适合吃' : '' }}<slot></slot></view>
+    <view class="weather-hint">天气适合吃<slot></slot></view>
   </block>
 </view>
