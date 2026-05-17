@@ -1,21 +1,76 @@
 <view class="container">
-  <view wx:if="{{records.length === 0}}" class="empty">
+  <view wx:if="{{!hasData}}" class="empty">
     <view class="empty-icon">📋</view>
     <view class="empty-text">还没有记录</view>
     <view class="empty-desc">去首页随机一个或扫菜单试试吧</view>
   </view>
 
-  <view wx:else class="record-list">
-    <view class="record-count">共 {{records.length}} 条记录</view>
-    <view
-      wx:for="{{records}}"
-      wx:key="id"
-      class="record-item"
-    >
-      <view class="record-emoji">{{item.emoji}}</view>
-      <view class="record-info">
-        <view class="record-name">{{item.dishName}}</view>
-        <view class="record-meta">{{item.timeText}} · {{item.sourceText}}</view>
+  <view wx:else>
+    <!-- Analytics Section -->
+    <view class="stats-section">
+      <view class="stats-row">
+        <view class="stat-card">
+          <view class="stat-number">{{stats.totalMeals}}</view>
+          <view class="stat-label">总记录</view>
+        </view>
+        <view class="stat-card">
+          <view class="stat-number">{{stats.weekCount}}</view>
+          <view class="stat-label">本周</view>
+        </view>
+        <view class="stat-card">
+          <view class="stat-number">{{stats.streakDays}}</view>
+          <view class="stat-label">连续天数</view>
+        </view>
+      </view>
+
+      <!-- Category Breakdown -->
+      <view class="stats-block" wx:if="{{stats.categoryBreakdown.length > 0}}">
+        <view class="block-title">品类分布</view>
+        <view class="category-list">
+          <view
+            wx:for="{{stats.categoryBreakdown}}"
+            wx:key="label"
+            class="category-row"
+          >
+            <text class="category-label">{{item.label}}</text>
+            <view class="category-bar-wrap">
+              <view class="category-bar" style="width: {{item.percent}}%"></view>
+            </view>
+            <text class="category-pct">{{item.percent}}%</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- Top Dishes -->
+      <view class="stats-block" wx:if="{{stats.topDishes.length > 0}}">
+        <view class="block-title">最爱 TOP{{stats.topDishes.length}}</view>
+        <view class="top-list">
+          <view
+            wx:for="{{stats.topDishes}}"
+            wx:key="name"
+            class="top-item"
+          >
+            <text class="top-emoji">{{item.emoji}}</text>
+            <text class="top-name">{{item.name}}</text>
+            <text class="top-count">{{item.count}}次</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- Record List -->
+    <view class="record-list">
+      <view class="record-count">共 {{records.length}} 条记录</view>
+      <view
+        wx:for="{{records}}"
+        wx:key="id"
+        class="record-item"
+      >
+        <view class="record-emoji">{{item.emoji}}</view>
+        <view class="record-info">
+          <view class="record-name">{{item.dishName}}</view>
+          <view class="record-meta">{{item.timeText}} · {{item.sourceText}}</view>
+        </view>
       </view>
     </view>
   </view>
